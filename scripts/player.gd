@@ -3,7 +3,6 @@ extends CharacterBody2D
 # Preload the projectile scene
 @onready var projectile_scene = preload("res://projectile.tscn")
 
-
 var speed = 300  
 var viewport
 func _ready():

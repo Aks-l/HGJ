@@ -32,13 +32,13 @@ func _physics_process(delta: float) -> void:
 
 # Collision handling
 func _on_entered_body(body: Node) -> void:
-	print("Body entered: ", body.name)
+	print_debug(self)
 	if body.is_in_group("player"):
-
-		print(Global.hp)
+		Global.hp -= 1
 		queue_free()
 		# Decrease player HP
 	elif body.is_in_group("enemy"):
+		Global.ehp -= 1
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
@@ -57,7 +57,6 @@ func merge_with_bubble(body: Node) -> void:
 	var combinedSize = sqrt((self.size**2 + body.size**2))
 	var combinedSpeed = self.velocity.y + body.velocity.y
 	var mergedProjectile = projectileScene.instantiate()
-
 	# Ensure merged projectile is added to parent
 	get_parent().add_child(mergedProjectile)
 	mergedProjectile.position = (self.position + body.position) / 2

@@ -5,6 +5,7 @@ extends CharacterBody2D  # Use a movable body type
 var rng = RandomNumberGenerator.new()
 
 # Variables
+
 var speed = 200
 var moving = false
 var target_x = null
@@ -23,10 +24,10 @@ func _physics_process(delta):
 	
 	if not moving:
 		# Set a random target position and direction
-		spawn_projectile()
 		target_x = rng.randi_range(100, 1000)
-		velocity.x = speed * sign(target_x - position.x)  # Determine movement direction
+		velocity.x = speed * sign(target_x - position.x) # Determine movement direction
 		moving = true
+		
 	else:
 		# Apply movement
 		velocity.x = speed * sign(target_x - position.x)
@@ -34,5 +35,6 @@ func _physics_process(delta):
 
 		# Check if the target is reached
 		if abs(position.x - target_x) < 5:
+			spawn_projectile()
 			moving = false
 			velocity = Vector2.ZERO  # Stop movement

@@ -1,11 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://eafeqtq653pm"]
+[gd_scene load_steps=10 format=3 uid="uid://eafeqtq653pm"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_jokre"]
 [ext_resource type="Texture2D" uid="uid://cocilvltyow67" path="res://sprites/character.png" id="1_p4701"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_qm1y7"]
 [ext_resource type="Texture2D" uid="uid://ckprighr60r0a" path="res://sprites/boss.png" id="3_50gg1"]
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="3_o1fdk"]
-[ext_resource type="PackedScene" uid="uid://by5j467c1ttck" path="res://hud.tscn" id="5_1p5qa"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="6_4tp60"]
+[ext_resource type="Script" path="res://scripts/lives.gd" id="6_dbmte"]
+
+[sub_resource type="GDScript" id="GDScript_oy2am"]
+script/source = "extends Node2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ck7tb"]
 size = Vector2(140, 204)
@@ -15,7 +28,7 @@ size = Vector2(135.5, 133.5)
 
 [node name="main" type="Node2D"]
 position = Vector2(1, -2)
-script = ExtResource("1_jokre")
+script = SubResource("GDScript_oy2am")
 
 [node name="player" type="CharacterBody2D" parent="."]
 position = Vector2(577, 558)
@@ -39,8 +52,31 @@ position = Vector2(6.10352e-05, 0.249962)
 shape = SubResource("RectangleShape2D_ntq64")
 
 [node name="Sprite2D" type="Sprite2D" parent="enemy"]
-position = Vector2(-0.999939, 0.249969)
 scale = Vector2(0.43038, 0.574786)
 texture = ExtResource("3_50gg1")
 
-[node name="HUD" parent="." instance=ExtResource("5_1p5qa")]
+[node name="playerHP" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 607.0
+offset_right = 59.0
+offset_bottom = 630.0
+text = "a"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_dbmte")
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -574.5
+offset_top = -16.5
+offset_right = 574.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.615686, 0, 0, 1)
+script = ExtResource("6_4tp60")
