@@ -7,22 +7,25 @@ extends Area2D
 
 
 var velocity: Vector2 = Vector2.ZERO
-var size = 5
-
+var size: float
+var isMerging = false
 
 # Initialize projectile
-func init_projectile(speed: float, dir: int, _size: int) -> void:
-	add_to_group("bubble")
+func init_projectile(speed: float, dir: int, newsize: float) -> void:
 	
-	self.body_entered.connect(_on_entered_body)
 	velocity = Vector2(0, speed * dir)
-	size += _size
-	
-	collisionShape.shape.radius = size
-	sprite.scale = Vector2(size / 10, size / 10)
+	size = newsize
+	collisionShape.shape.radius = size * 1.41
+	var radius = collisionShape.shape.radius
+	var texture_size = sprite.texture.get_size()
+	sprite.scale = Vector2(radius * 2 / texture_size.x, radius * 2 / texture_size.y)
+	add_to_group("bubble")
 
-# Spawning	
 
+func _ready() -> void:
+	self.body_entered.connect(_on_entered_body)
+	self.area_entered.connect(_on_area_entered)
+	add_to_group("bubble")
 
 # Movement + Out-of-bounds handling
 func _physics_process(delta: float) -> void:
@@ -32,18 +35,26 @@ func _physics_process(delta: float) -> void:
 
 # Collision handling
 func _on_entered_body(body: Node) -> void:
+	print("Body entered: ", body.name)
 	if body.is_in_group("player"):
 		queue_free()
 		# Decrease player HP
 	elif body.is_in_group("enemy"):
 		queue_free()
-		# Decrease boss HP
-	elif body.is_in_group("bubble"):
+
+func _on_area_entered(area: Area2D) -> void:
+	if isMerging or area.isMerging:
+		return
+	if area.is_in_group("bubble"):
+		isMerging = true
+		area.isMerging = true
 		queue_free()
+		merge_with_bubble(area)
+		
 
 # Merging bubbles
 func merge_with_bubble(body: Node) -> void:
-	var combinedSize = self.size + body.size
+	var combinedSize = sqrt((self.size**2 + body.size**2))
 	var combinedSpeed = self.velocity.y + body.velocity.y
 	var mergedProjectile = projectileScene.instantiate()
 
