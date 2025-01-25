@@ -9,11 +9,14 @@ var speed = 200
 var moving = false
 var target_x = null
 
+func _ready():
+	add_to_group("enemy")
+
 func spawn_projectile():
 	var projectile = projectile_scene.instantiate()
 	get_parent().add_child(projectile)
-	projectile.position = position + Vector2(0, 20)
-	projectile.init_projectile(300)
+	projectile.position = position + Vector2(0, 100)
+	projectile.init_projectile(300, 1, 10)
 
 func _physics_process(delta):
 	if not moving:

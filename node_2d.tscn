@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://eafeqtq653pm"]
 
 [ext_resource type="Texture2D" uid="uid://cocilvltyow67" path="res://sprites/character.png" id="1_p4701"]
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_qm1y7"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_qm1y7"]
 [ext_resource type="Texture2D" uid="uid://ckprighr60r0a" path="res://sprites/boss.png" id="3_50gg1"]
-[ext_resource type="Script" path="res://scripts/enemy-movement.gd" id="3_o1fdk"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="3_o1fdk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ck7tb"]
 size = Vector2(140, 204)

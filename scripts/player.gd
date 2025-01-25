@@ -7,8 +7,7 @@ extends CharacterBody2D
 var speed = 300  
 
 func _ready():
-	spawn_projectile()
-	spawn_projectile()  # Optional: Test spawning on ready
+	add_to_group("player")
 
 func _process(delta):
 	if Input.is_action_just_pressed("shoot"): 
@@ -18,8 +17,8 @@ func _process(delta):
 func spawn_projectile():
 	var projectile = projectile_scene.instantiate()
 	get_parent().add_child(projectile)
-	projectile.position = position + Vector2(0, -20)
-	projectile.init_projectile(-300)
+	projectile.position = position + Vector2(0, -100)
+	projectile.init_projectile(300, -1, 10)
 
 func _physics_process(delta):
 	# Handle player movement
