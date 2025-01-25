@@ -1,10 +1,8 @@
 extends Area2D
 
 @onready var projectileScene = preload("res://projectile.tscn")
-
 @onready var collisionShape = $CollisionShape2D
 @onready var sprite = $Sprite2D
-
 
 var velocity: Vector2 = Vector2.ZERO
 var size: float
@@ -12,7 +10,6 @@ var isMerging = false
 
 # Initialize projectile
 func init_projectile(speed: float, dir: int, newsize: float) -> void:
-	
 	velocity = Vector2(0, speed * dir)
 	size = newsize
 	collisionShape.shape.radius = size * 1.41
@@ -37,12 +34,15 @@ func _physics_process(delta: float) -> void:
 func _on_entered_body(body: Node) -> void:
 	print("Body entered: ", body.name)
 	if body.is_in_group("player"):
+
+		print(Global.hp)
 		queue_free()
 		# Decrease player HP
 	elif body.is_in_group("enemy"):
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
+	#avoid both collision detections causing a double merge going infinite
 	if isMerging or area.isMerging:
 		return
 	if area.is_in_group("bubble"):

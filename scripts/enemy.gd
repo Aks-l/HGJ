@@ -16,9 +16,11 @@ func spawn_projectile():
 	var projectile = projectile_scene.instantiate()
 	get_parent().add_child(projectile)
 	projectile.position = position + Vector2(0, 100)
-	projectile.init_projectile(300, 1, 10)
+	projectile.init_projectile(300+rng.randi_range(-50,50), 1, 10)
 
 func _physics_process(delta):
+	position.y = Global.viewport[1] * 0.2
+	
 	if not moving:
 		# Set a random target position and direction
 		spawn_projectile()

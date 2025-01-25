@@ -3,15 +3,14 @@ extends CharacterBody2D
 # Preload the projectile scene
 @onready var projectile_scene = preload("res://projectile.tscn")
 
-# Player movement speed (adjusted to a reasonable value)
-var speed = 300  
 
+var speed = 300  
+var viewport
 func _ready():
 	add_to_group("player")
 
 func _process(delta):
 	if Input.is_action_just_pressed("shoot"): 
-		print("Shoot action detected")
 		spawn_projectile()
 
 func spawn_projectile():
@@ -24,13 +23,12 @@ func _physics_process(delta):
 	# Handle player movement
 	var input_direction = 0
 	if Input.is_action_pressed("move_left"):
-		print_debug("Moving left")
 		input_direction -= 1
 	if Input.is_action_pressed("move_right"):
-		print_debug("Moving right")
 		input_direction += 1
 
 	velocity.x = input_direction * speed
-	
+	position.y = Global.viewport[1] * 0.8
+	 
 	# Apply velocity to the character
 	move_and_slide()
