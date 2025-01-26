@@ -16,8 +16,7 @@ func init_projectile(speed: float, dir: int, newsize: float) -> void:
 	var radius = collisionShape.shape.radius
 	var texture_size = sprite.texture.get_size()
 	sprite.scale = Vector2(radius * 2 / texture_size.x, radius * 2 / texture_size.y)
-	add_to_group("bubble")
-
+	
 
 func _ready() -> void:
 	self.body_entered.connect(_on_entered_body)
@@ -38,7 +37,7 @@ func _on_entered_body(body: Node) -> void:
 		queue_free()
 		# Decrease player HP
 	elif body.is_in_group("enemy"):
-		Global.ehp -= 1
+		Global.ehp -= self.size/10
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:

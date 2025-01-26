@@ -19,7 +19,20 @@ var moving = false
 var target_x = null
 var bossID = 0
 
+func init_enemy(_speed: float, _hp: float, _bulletSize: int, _reload: int, _bulletSpeed: int, _bossID: int) -> void:
+	Global.mehp = _hp
+	Global.ehp = Global.mehp
+	speed = _speed
+	bulletSize = _bulletSize
+	bulletSpeed = _bulletSpeed
+	bossID = _bossID
+	texture = preload("res://sprites/boss.png")
+	var spriteNode = get_node("Sprite2D")
+	spriteNode.texture = texture
+	print("inited")
+
 func _ready():
+	print("no")
 	add_to_group("enemy")
 
 func spawn_projectile():
@@ -29,6 +42,8 @@ func spawn_projectile():
 	projectile.init_projectile(bulletSpeed+rng.randi_range(-50,50), 1, bulletSize)
 
 func _physics_process(delta):
+	print("hm")
+	print(position)
 	position.y = Global.viewport[1] * 0.2
 	if not moving:
 		# Set a random target position and direction
@@ -46,6 +61,7 @@ func _physics_process(delta):
 			velocity = Vector2.ZERO  # Stop movement
 	
 	if Global.ehp <= 0:
+		print("noo")
 		queue_free()
 		var nextEnemy = enemy_scene.instantiate()
 		get_parent().add_child(nextEnemy)

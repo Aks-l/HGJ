@@ -10,7 +10,6 @@ func _ready() -> void:
 	set_anchor(maxX, 0.5)
 	set_anchor(maxY, 0.5)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	maxX = Global.viewport[0]
@@ -21,9 +20,7 @@ func _process(delta: float) -> void:
 	var factor:float = now/full
 	var toRemove = 1-factor
 	
-	
 	position.x = (toRemove*maxX)/2
 	position.y = maxY * 0.02
 	size.x = maxX - (toRemove*maxX)
 	size.y = maxY*0.05
-	
